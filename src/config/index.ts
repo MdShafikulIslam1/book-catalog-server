@@ -5,4 +5,5 @@ export default {
   port: process.env.PORT,
   env: process.env.NODE_ENV,
   database_url: process.env.DATABASE_URL,
+  salt_round: process.env.SALT_ROUND,
 };
