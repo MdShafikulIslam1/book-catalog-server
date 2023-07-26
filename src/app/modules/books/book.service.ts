@@ -63,9 +63,22 @@ const updateBook = async (
   id: string,
   updatedData: Partial<IBook>
 ): Promise<IBook | null> => {
-  const result = await Book.findByIdAndUpdate(id, updatedData, { new: true });
+  const result = await Book.findByIdAndUpdate(
+    id,
+    { $push: { reviews: updatedData.reviews } },
+    { new: true }
+  );
   return result;
 };
+// const editBook = async (
+//   id: string,
+//   updatedData: Partial<IBook>
+// ): Promise<IBook | null> => {
+//   console.log(id, updatedData);
+
+//   const result = await Book.findByIdAndUpdate(id, updatedData, { new: true });
+//   return result;
+// };
 const deleteBook = async (id: string): Promise<IBook | null> => {
   const result = await Book.findByIdAndDelete(id);
   return result;
@@ -76,4 +89,5 @@ export const BookService = {
   getSingleBook,
   updateBook,
   deleteBook,
+  // editBook,
 };

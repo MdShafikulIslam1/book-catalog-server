@@ -41,7 +41,7 @@ const getSingleBook = catchAsync(async (req, res) => {
 });
 const updateBook = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const { ...updatedData } = req.body;
+  const { ...updatedData } = req.body.data;
   const result = await BookService.updateBook(id, updatedData);
   sendResponse<IBook>(res, {
     success: true,

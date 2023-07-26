@@ -3,6 +3,7 @@ export type IBook = {
   author: string;
   genre: string;
   imageUrl: string;
+  reviews?: Array<string>;
 };
 
 export type IFilterableFields = {
