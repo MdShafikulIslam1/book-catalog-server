@@ -45,10 +45,31 @@ const getAllBook = async (
     .sort(sortCondition)
     .skip(skip)
     .limit(limit);
+  const pipeline = [
+    {
+      $group: {
+        _id: {
+          title: '$title',
+          author: '$author',
+          genre: '$genre',
+        },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        uniqueBooks: { $push: '$_id' },
+      },
+    },
+  ];
+  const groupData = await Book.aggregate(pipeline);
+
   const total = await Book.countDocuments(whereCondition);
   return {
     data: result,
     meta: {
+      groupData,
       page,
       total,
       limit,
@@ -70,15 +91,13 @@ const updateBook = async (
   );
   return result;
 };
-// const editBook = async (
-//   id: string,
-//   updatedData: Partial<IBook>
-// ): Promise<IBook | null> => {
-//   console.log(id, updatedData);
-
-//   const result = await Book.findByIdAndUpdate(id, updatedData, { new: true });
-//   return result;
-// };
+const editBook = async (
+  id: string,
+  updatedData: Partial<IBook>
+): Promise<IBook | null> => {
+  const result = await Book.findByIdAndUpdate(id, updatedData, { new: true });
+  return result;
+};
 const deleteBook = async (id: string): Promise<IBook | null> => {
   const result = await Book.findByIdAndDelete(id);
   return result;
@@ -89,5 +108,5 @@ export const BookService = {
   getSingleBook,
   updateBook,
   deleteBook,
-  // editBook,
+  editBook,
 };

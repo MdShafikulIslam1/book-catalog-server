@@ -21,7 +21,7 @@ const getAllBook = catchAsync(async (req, res) => {
   const filters = pick(req.query, filterableFields);
   const paginationOptions = pick(req.query, paginationOptionFields);
   const result = await BookService.getAllBook(filters, paginationOptions);
-  sendResponse<IBook[]>(res, {
+  sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Successfully retrieve all Book catalog',
@@ -60,10 +60,20 @@ const deleteBook = catchAsync(async (req, res) => {
     data: result,
   });
 });
+const editBook = catchAsync(async (req, res) => {
+  const result = await BookService.editBook(req.params.id, req.body);
+  sendResponse<IBook>(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: 'Successfully Edit Book',
+    data: result,
+  });
+});
 export const BookController = {
   createBook,
   getAllBook,
   getSingleBook,
   updateBook,
   deleteBook,
+  editBook,
 };

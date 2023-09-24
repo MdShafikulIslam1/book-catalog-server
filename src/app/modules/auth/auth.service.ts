@@ -34,6 +34,7 @@ const loginUser = async (payload: ILoginUser) => {
   return {
     accessToken,
     refreshToken,
+    user: isUserExist,
   };
 };
 
