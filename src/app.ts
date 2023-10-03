@@ -5,6 +5,15 @@ import globalErrorHandler from './app/middlewares/gobalErrorHandler';
 const app = express();
 
 //parser
+// app.use(
+//   cors({
+//     origin: [
+//       'http://localhost:4001',
+//       'https://book-catelog-backend-rho.vercel.app',
+//     ],
+//     credentials: true,
+//   })
+// );
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
